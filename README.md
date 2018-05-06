@@ -1,8 +1,8 @@
-#ROBOT SIGUELINEAS
+# ROBOT SIGUELINEAS
 
 ![Robot siguelineas](./images/siguelineas_1.jpg)
 
-##Lista de componentes
+## Lista de componentes
 A continuación se enumerarán los componentes para montar la versión básica. Los elementos añadidos para las siguientes versiones se enumerarán en cada una de estas.
 
 * Chasis policarbonato
@@ -18,7 +18,7 @@ A continuación se enumerarán los componentes para montar la versión básica. 
 * Cables dupont
 
 ---
-###Información de los motores
+### Información de los motores
 * Tensión de alimentación: 3-12V (Recomendada: 6-8V)
 * Reductora con relación 1:48.
 * Par máximo: 800 g·cm (3V)
@@ -28,20 +28,21 @@ A continuación se enumerarán los componentes para montar la versión básica. 
 >Se alimentarán con el portapilas mencionado anteriormente, es decir, 6V.
 
 ---
-###Información del módulo L298N
-<center><img src="./05_IMAGENES/l298n.jpg" width="200"></center>
+### Información del módulo L298N
+<center><img src="./images/l298n.jpg" width="200"></center>
 
 Permite controlar motores de entre 5 a 35V con una salida que puede suministrar hasta 2A.
 
 Posee un jumper para controlar el regulador de tensión 7805 que incorpora.
 
 **JUMPER PUESTO - Regulador activado**: Para motores de 5 a 12V. El conector +5V funciona como salida, suministrando como máximo 500 mA.
+
 **SIN JUMPER - Regulador desactivado**: Para motores que trabajen con alimentaciones de 12 a 35V. El terminal +5V deberá conectarse a una señal de 5V para alimentar la parte lógica del driver.
 
 ***¡ATENCIÓN! No alimentar el terminal +5V con el jumper puesto para evitar dañar el módulo.***
 
 ***
-#Montaje
+# Montaje
 
 La alimentación del portapilas irá directamente al driver conectado el cable rojo al terminal +12V del driver, pasando previamente por el interruptor, y el cable negro al terminal GND.
 
@@ -82,7 +83,7 @@ Se emplearán los terminales D0 de los sensores y los terminales VCC y GND de ca
 | <center>Sensor derecha</center>   | <center>D2</center> |
 
 ***
-#Calibrar sensores infrarrojos
+# Calibrar sensores infrarrojos
 
 A través del sketch `01_CODIGOS_ARDUINO/prueba_infrarrojos.ino` se permite seleccionar uno de los tres sensores TCRT5000 conectados al Arduino para ajustar el potenciómetro que incorporan para una detección correcta de la línea de color negro. Al detectar la línea se enciende el LED del pin 13 de Arduino Nano.
 
@@ -91,7 +92,7 @@ Otro modo de calibraación sería alimentarlos y observar los LEDs que incluye e
 Sabiendo esto se ajustará la sensibilidad de cada uno de los sensores.
 
 ***
-#Comprobar sentido de giro de los motores
+# Comprobar sentido de giro de los motores
 
 El control del sentido de cada uno de los motores se realizará mediante los pines IN1 e IN2 para el motor A (derecho) y los pines IN3 e IN4 para el motor B (izquierdo).
 
@@ -120,7 +121,7 @@ El sketch contiene cinco funciones para comprobar las distintas funciones de mov
 Si alguna función resulta errónea bastará con modificar los valores que se envían a los pines IN1 e IN2, para el motor A, o IN3 e IN4, para el motor B.
 
 ***
-#Circuito de pruebas
+# Circuito de pruebas
 ![Robot siguelineas](./images/circuito.jpg)
 
 El circuito que se muestra en la imagen será en el que se realicen las pruebas para comprobar y ajustar el funcionamiento del robot.
