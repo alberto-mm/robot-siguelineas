@@ -35,7 +35,7 @@ Permite controlar motores de entre 5 a 35V con una salida que puede suministrar 
 
 Posee un jumper para controlar el regulador de tensión 7805 que incorpora.
 
-**JUMPER PUESTO - Regulador activado**: Para motores de 5 a 12V. El conector +5V funciona como salida, suministrando como máximo 500 mA.
+**JUMPER PUESTO - Regulador activado**: Para motores de 5 a 12V. El conector +5V funciona como salida, suministrando hasta 500 mA.
 
 **SIN JUMPER - Regulador desactivado**: Para motores que trabajen con alimentaciones de 12 a 35V. El terminal +5V deberá conectarse a una señal de 5V para alimentar la parte lógica del driver.
 
@@ -46,7 +46,7 @@ Posee un jumper para controlar el regulador de tensión 7805 que incorpora.
 
 La alimentación del portapilas irá directamente al driver conectado el cable rojo al terminal +12V del driver, pasando previamente por el interruptor, y el cable negro al terminal GND.
 
-Asegurasre de que el jumper está puesto, ya que la salida de 5V se utilizará para alimentar el Arduino.
+Asegurarse de que el jumper está puesto, ya que la salida de 5V se utilizará para alimentar el Arduino.
 
 **Conexión del driver con los motores:**
 
@@ -127,3 +127,16 @@ Si alguna función resulta errónea bastará con modificar los valores que se en
 El circuito que se muestra en la imagen será en el que se realicen las pruebas para comprobar y ajustar el funcionamiento del robot.
 
 La línea negra tiene un grosor de unos 35mm.
+
+***
+# Robot\_siguelineas\_v1
+
+El principio de funcionamiento de esta primera versión es:
+
+* Si el sensor central detecta la línea negra el robot se desplazará hacia adelante.
+* Si el sensor derecho detecta la línea negra el robot girará hacia la derecha.
+* Si el sensor izquierdo detecta la línea negra el robot girará hacia la izquierda.
+
+El sketch de esta versión se encuentra en `01_CODIGOS_ARDUINO/Robot_siguelineas_v1`
+
+En la siguiente versión se implementará un PID.
