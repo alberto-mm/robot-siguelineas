@@ -25,7 +25,7 @@ A continuación se enumerarán los componentes para montar la versión básica. 
 * Velocidad sin carga: 170 rpm (3V)
 * Corriente de carga: 70 mA (3V) - 250 mA máx.
 
->Se alimentarán con el portapilas mencionado anteriormente, es decir, 6V.
+> Se alimentarán con el portapilas mencionado anteriormente, es decir, 6V.
 
 ---
 ### Información del módulo L298N
@@ -119,6 +119,8 @@ El sketch contiene cinco funciones para comprobar las distintas funciones de mov
 | <center>S</center> | <center>`Parar()`</center> |
 
 Si alguna función resulta errónea bastará con modificar los valores que se envían a los pines IN1 e IN2, para el motor A, o IN3 e IN4, para el motor B.
+
+El [sketch](./01_CODIGOS_ARDUINO/prueba_sentido_motores/prueba_sentido_motores.ino) que se ha utilizado ha sido extraído del [proyecto](https://www.prometec.net/direccion-siguelineas/) de [Prometec](https://www.prometec.net/).
 
 ***
 # Circuito de pruebas
