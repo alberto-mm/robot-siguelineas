@@ -59,7 +59,7 @@ Asegurarse de que el jumper está puesto, ya que la salida de 5V se utilizará p
 
 **Conexión del driver con el Arduino:**
 
-> *NOTA: Retirar los jumpers de los terminales ENA y ENB*
+> *Retirar los jumpers de los terminales ENA y ENB*
 
 | DRIVER               | ARDUINO              |
 |--------|--------|
@@ -140,3 +140,63 @@ El principio de funcionamiento de esta primera versión es:
 El sketch de esta versión se encuentra en `01_CODIGOS_ARDUINO/Robot_siguelineas_v1`
 
 En la siguiente versión se implementará un PID.
+
+***
+# Robot\_siguelineas\_v2
+
+En esta versión se implementará un PID para controlar la velocidad de giro de cada una de las ruedas del robot.
+
+Para implementar el PID será necesario definir un valor de error y actuar en función de este valor. El error se obtendrá según las lecturas de los sensores infrarrojos, y los distintos valores posibles se recogen en la siguiente tabla:
+
+| Sensor izquierdo | Sensor central | Sensor derecho | ERROR |
+|--------|--------|--------|--------|
+| <center>0</center> | <center>0</center> | <center>1</center> | <center>**2**</center> |
+| <center>0</center> | <center>1</center> | <center>1</center> | <center>**1**</center> |
+| <center>0</center> | <center>1</center> | <center>0</center> | <center>**0**</center> |
+| <center>1</center> | <center>1</center> | <center>0</center> | <center>**-1**</center> |
+| <center>1</center> | <center>0</center> | <center>0</center> | <center>**-2**</center> |
+
+> *EJEMPLO:* Si nos encontramos en el caso en el que el robot se va hacia la izquierda el error valdrá 1 (Caso 011). Será necesario disminuir la velocidad del motor derecho y aumentar la velocidad del motor izquierdo.
+
+Según el ejemplo anterior las variaciones de velocidad de cado uno de los motores quedarían:
+
+	velocidadMotorIzquierdo = velocidadBase + ERROR
+	velocidadMotorDerecho = velocidadBase - ERROR
+
+Aquí entra en juego el PID, ya que el valor del error es muy pequeño para controlar el robot de manera óptima.
+
+> *Al ser un robot pequeño únicamente se emplearán el término proporcional y el derivativo.*
+
+El término proporcional (Kp) se usa para que el robot responda más rápidamente y el término derivativo (Kd) para eliminar las oscilaciones. Las fórmulas a emplear serán las siguientes:
+
+	P = error
+	D = error - errorAnterior
+	PID = (Kp * P) + (Kd * D)
+
+Calculando así la nueva velocidad para cada motor:
+
+	velocidadMotorIzquierdo = velocidadBase + PID
+	velocidadMotorDerecho = velocidadBase - PID
+
+> *La velocidad en este punto se limitará con una cota máxima. Ver [sketch](./01_CODIGOS_ARDUINO/Robot_siguelineas_v2/Robot_siguelineas_v2.ino) (Líneas 71-74).*
+
+Los pasos seguidos para obtener los valores de Kp y Kd son:
+
+1. Fijar Kd=0 y aproximar el valor de Kp.
+	* Si responde despacio: disminuar Kp.
+	* Si se vuelve inestable: aumentar Kp.
+2. Cuando se haya encontrado un valor razonable de Kp, fijar Kd=Kp/2 y aproximar en torno a ese valor.
+	* Aumentar Kd si hay sobrepico.
+	* Disminuir Kd si es inestable.
+
+> *Es posible que también afecte el valor "Sample/Loop Rate" por lo que puede que sea necesario trabajar con un `delay` al final del bucle.*
+
+En resumen, la secuencia del loop sería la siguiente:
+
+1. Lectura de los sensores infrarrojos y determinación de la variable de error.
+2. Calcular PID.
+3. Almacenar valor del error para el siguiente loop.
+4. Calcular y acotar la nueva velocidad de los motores.
+5. Enviar información de velocidad a los motores.
+
+En siguientes versiones se implementará la detección de obstáculos mediante sensores ultrasónicos para medir distancia.
