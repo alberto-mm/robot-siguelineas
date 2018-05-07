@@ -29,6 +29,7 @@ A continuación se enumerarán los componentes para montar la versión básica. 
 
 ---
 ### Información del módulo L298N
+
 <center><img src="./images/l298n.jpg" width="200"></center>
 
 Permite controlar motores de entre 5 a 35V con una salida que puede suministrar hasta 2A.
@@ -50,37 +51,37 @@ Asegurarse de que el jumper está puesto, ya que la salida de 5V se utilizará p
 
 **Conexión del driver con los motores:**
 
-| DRIVER              | MOTOR IZQUIERDO        | MOTOR DERECHO          |
-|--------|--------|--------|
-| <center>OUT1</center> | <center>ROJO</center>  | <center>-</center>     |
-| <center>OUT2</center> | <center>NEGRO</center> | <center>-</center>     |
-| <center>OUT3</center> | <center>-</center>     | <center>ROJO</center>  |
-| <center>OUT4</center> | <center>-</center>     | <center>NEGRO</center> |
+| DRIVER | MOTOR IZQUIERDO | MOTOR DERECHO |
+|:--------:|:--------:|:--------:|
+| OUT1 | ROJO  | -     |
+| OUT2 | NEGRO | -     |
+| OUT3 | -     | ROJO  |
+| OUT4 | -     | NEGRO |
 
 **Conexión del driver con el Arduino:**
 
 > *Retirar los jumpers de los terminales ENA y ENB*
 
-| DRIVER               | ARDUINO              |
-|--------|--------|
-| <center>GND</center> | <center>GND</center> |
-| <center>+5V</center> | <center>5V</center>  |
-| <center>ENA</center> | <center>D6</center>  |
-| <center>IN1</center> | <center>D13</center> |
-| <center>IN2</center> | <center>D12</center> |
-| <center>IN3</center> | <center>D11</center> |
-| <center>IN4</center> | <center>D10</center> |
-| <center>ENB</center> | <center>D5</center>  |
+| DRIVER | ARDUINO |
+|:--------:|:--------:|
+| GND | GND |
+| +5V | 5V  |
+| ENA | D6  |
+| IN1 | D13 |
+| IN2 | D12 |
+| IN3 | D11 |
+| IN4 | D10 |
+| ENB | D5  |
 
 **Conexión de los sensores infrarrojos con el Arduino:**
 
 Se emplearán los terminales D0 de los sensores y los terminales VCC y GND de cada uno de ellos se conectarán a 5V y GND, respectivamente.
 
-| MÓDULO INFRARROJO                 | ARDUINO             |
-|--------|--------|
-| <center>Sensor izquierda</center> | <center>D4</center> |
-| <center>Sensor central</center>   | <center>D3</center> |
-| <center>Sensor derecha</center>   | <center>D2</center> |
+| MÓDULO INFRARROJO | ARDUINO |
+|:--------:|:--------:|
+| Sensor izquierda | D4 |
+| Sensor central   | D3 |
+| Sensor derecha   | D2 |
 
 ***
 # Calibrar sensores infrarrojos
@@ -99,10 +100,10 @@ El control del sentido de cada uno de los motores se realizará mediante los pin
 Las distintas configuraciones de los valores lógicos de estos pines se recogen en la siguiente tabla:
 
 | IN1 / IN3 | IN2 / IN4 | FUNCIÓN |
-|--------|--------|--------|
-| <center>HIGH</center> | <center>LOW</center> | <center>Giro sentido A</center> |
-| <center>LOW</center>  | <center>HIGH</center> | <center>Giro sentido B</center> |
-| <center>LOW</center> | <center>LOW</center> | <center>Motor parado</center> |
+|:--------:|:--------:|:--------:|
+| HIGH      | LOW       | Giro sentido A |
+| LOW       | HIGH      | Giro sentido B |
+| LOW       | LOW       | Motor parado   |
 
 La velocidad de cada uno de los motores se controlará mediante los pines ENA, para controlar el motor A, y ENB, para el motor B. Bastará con enviar una señal PWM a cada uno de estos pines para variar la velocidad de cada motor.
 
@@ -110,13 +111,13 @@ Sabiendo todo esto se hace uso del sketch `01_CODIGOS_ARDUINO/prueba_sentido_mot
 
 El sketch contiene cinco funciones para comprobar las distintas funciones de movimiento del robot: `Adelante()`, `Atras()`, `Derecha()`, `Izquierda()` y `Parar()`. Cada una de ellas se seleccionará mediante el envío de una letra a través del terminal.
 
-| LETRA | FUNCIÓN |
-|--------|--------|
-| <center>F</center> | <center>`Adelante()`</center> |
-| <center>B</center> | <center>`Atras()`</center> |
-| <center>R</center> | <center>`Derecha()`</center> |
-| <center>L</center> | <center>`Izquierda()`</center> |
-| <center>S</center> | <center>`Parar()`</center> |
+| LETRA | FUNCIÓN       |
+|:--------:|:--------:|
+| F     | `Adelante()`  |
+| B     | `Atras()`     |
+| R     | `Derecha()`   |
+| L     | `Izquierda()` |
+| S     | `Parar()`     |
 
 Si alguna función resulta errónea bastará con modificar los valores que se envían a los pines IN1 e IN2, para el motor A, o IN3 e IN4, para el motor B.
 
@@ -150,13 +151,13 @@ En esta versión se implementará un PID para controlar la velocidad de giro de 
 
 Para implementar el PID será necesario definir un valor de error y actuar en función de este valor. El error se obtendrá según las lecturas de los sensores infrarrojos, y los distintos valores posibles se recogen en la siguiente tabla:
 
-| Sensor izquierdo | Sensor central | Sensor derecho | ERROR |
-|--------|--------|--------|--------|
-| <center>0</center> | <center>0</center> | <center>1</center> | <center>**2**</center> |
-| <center>0</center> | <center>1</center> | <center>1</center> | <center>**1**</center> |
-| <center>0</center> | <center>1</center> | <center>0</center> | <center>**0**</center> |
-| <center>1</center> | <center>1</center> | <center>0</center> | <center>**-1**</center> |
-| <center>1</center> | <center>0</center> | <center>0</center> | <center>**-2**</center> |
+| Sensor izquierdo | Sensor central | Sensor derecho | ERROR  |
+|:--------:|:--------:|:--------:|:--------:|
+| 0                | 0              | 1              | **2**  |
+| 0                | 1              | 1              | **1**  |
+| 0                | 1              | 0              | **0**  |
+| 1                | 1              | 0              | **-1** |
+| 1                | 0              | 0              | **-2** |
 
 > *EJEMPLO:* Si nos encontramos en el caso en el que el robot se va hacia la izquierda el error valdrá 1 (Caso 011). Será necesario disminuir la velocidad del motor derecho y aumentar la velocidad del motor izquierdo.
 
